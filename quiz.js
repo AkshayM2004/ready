@@ -260,7 +260,16 @@ function calculateScore() {
 }  
 function detectSplitScreen() {
     setInterval(() => {
-        if (window.innerWidth < screen.width * 0.8 || window.innerHeight < screen.height * 0.8) {
+        let screenWidth = screen.width;
+        let screenHeight = screen.height;
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
+
+        // Detect split screen only if width or height is reduced below 70% (excluding mobile rotations)
+        if (
+            (windowWidth < screenWidth * 0.7 || windowHeight < screenHeight * 0.7) &&
+            screenWidth > 800 // Excludes small mobile devices from false detection
+        ) {
             if (!quizPaused) {
                 alert("Split screen detected! Quiz paused. Enter password to resume.");
                 pauseQuiz();
@@ -271,5 +280,6 @@ function detectSplitScreen() {
 
 // Call this function when the quiz starts
 detectSplitScreen();
+
 
 
