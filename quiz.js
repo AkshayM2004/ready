@@ -258,3 +258,15 @@ document.addEventListener("visibilitychange", function () {
 function calculateScore() {
     return questions.reduce((score, q) => (q.selected === q.answer ? score + 1 : score), 0);
 }  
+function monitorSplitScreen() {
+    window.addEventListener("resize", () => {
+        if (window.innerWidth < screen.width * 0.7) {  // Detects if window is less than 70% of screen width
+            alert("Split screen detected! Quiz paused. Enter password to resume.");
+            pauseQuiz();
+        }
+    });
+}
+
+// Call this function when the quiz starts
+monitorSplitScreen();
+
