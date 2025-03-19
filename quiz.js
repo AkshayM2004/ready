@@ -259,19 +259,18 @@ function calculateScore() {
     return questions.reduce((score, q) => (q.selected === q.answer ? score + 1 : score), 0);
 }  
 function detectSplitScreen() {
-    setInterval(() => {
-        let screenWidth = screen.width;
-        let screenHeight = screen.height;
-        let windowWidth = window.innerWidth;
-        let windowHeight = window.innerHeight;
+    let originalAspectRatio = window.innerWidth / window.innerHeight;
 
-        // Detect split screen only if width or height is reduced below 70% (excluding mobile rotations)
+    setInterval(() => {
+        let currentAspectRatio = window.innerWidth / window.innerHeight;
+
+        // Detect split-screen if aspect ratio changes significantly OR window size reduces below 75%
         if (
-            (windowWidth < screenWidth * 0.7 || windowHeight < screenHeight * 0.7) &&
-            screenWidth > 800 // Excludes small mobile devices from false detection
+            (Math.abs(currentAspectRatio - originalAspectRatio) > 0.3) || 
+            (window.innerWidth < screen.width * 0.75 && window.innerHeight < screen.height * 0.75)
         ) {
             if (!quizPaused) {
-                alert("Split screen detected! Quiz paused. Enter password to resume.");
+                alert("Split screen or multi-window mode detected! Quiz paused. Enter password to resume.");
                 pauseQuiz();
             }
         }
@@ -280,6 +279,7 @@ function detectSplitScreen() {
 
 // Call this function when the quiz starts
 detectSplitScreen();
+
 
 
 
