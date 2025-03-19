@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enable Internet</title>
+    <script>
+        function checkInternet() {
+            if (navigator.onLine) {
+                window.location.href = "score.html";
+            } else {
+                setTimeout(checkInternet, 1000); // Check every second
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", checkInternet);
+    </script>
+</head>
+<body>
+    <h2>Please enable the internet to proceed.</h2>
+    <p>Once internet is detected, you will be redirected to the score page automatically.</p>
+</body>
+</html>

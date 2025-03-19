@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Completed</title>
+    <script type="module">
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyD5T5bGTl_yhX2He0vX87lp1_mpS82TRsg",
+    authDomain: "login-form-98bfb.firebaseapp.com",
+    projectId: "login-form-98bfb",
+    storageBucket: "login-form-98bfb.firebasestorage.app",
+    messagingSenderId: "83414592931",
+    appId: "1:83414592931:web:f5aca4a8c4c2f63935fe16",
+    measurementId: "G-QZ41Q89997"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+async function uploadScoreToFirebase(userEmail) {
+    const finalScore = localStorage.getItem("finalScore");
+    if (!finalScore) {
+        console.log("No score available to upload.");
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "quizScores"), {
+            email: userEmail || "Anonymous",
+            score: parseInt(finalScore),
+            timestamp: new Date().toISOString()
+        });
+        console.log("Score uploaded successfully to Firebase.");
+    } catch (error) {
+        console.error("Error uploading score to Firebase:", error);
+    }
+}
+
+// Check authentication and upload score
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        uploadScoreToFirebase(user.email);
+    } else {
+        uploadScoreToFirebase("Anonymous");
+    }
+    localStorage.removeItem("finalScore");
+});
+
+    </script>
+</head>
+<body>
+    <h2>Quiz Completed</h2>
+    <p>Thank you for participating.</p>
+</body>
+</html>

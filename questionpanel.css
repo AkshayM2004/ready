@@ -1,0 +1,62 @@
+#questionPanel {
+    display: none;
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 260px; /* Increased width to fit 4 columns */
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+/* Grid layout for question buttons */
+#questionPanel .question-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+    gap: 5px;
+    padding: 5px;
+}
+
+/* Style individual question buttons */
+.question-btn {
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.question-btn:hover {
+    background: #0056b3;
+}
+
+.question-btn.active {
+    background: #004080;
+    color: #fff;
+    border: 2px solid white;
+}
+
+/* Scrollbar styling */
+#questionPanel::-webkit-scrollbar {
+    width: 8px;
+}
+
+#questionPanel::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+#questionPanel::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
