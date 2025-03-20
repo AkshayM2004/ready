@@ -254,6 +254,17 @@ document.addEventListener("visibilitychange", function () {
         pauseQuiz();
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("quizCompleted") === "true") {
+        alert("You have already completed the quiz. Returning to dashboard.");
+        window.location.href = "dashboard.html";
+    }
+});
+
+// Call this when quiz is completed (e.g., before redirecting to score page)
+function markQuizCompleted() {
+    localStorage.setItem("quizCompleted", "true");
+}
 
 function calculateScore() {
     return questions.reduce((score, q) => (q.selected === q.answer ? score + 1 : score), 0);
@@ -279,6 +290,7 @@ function detectSplitScreen() {
 
 // Call this function when the quiz starts
 detectSplitScreen();
+
 
 
 
