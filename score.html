@@ -50,12 +50,28 @@ onAuthStateChanged(auth, (user) => {
         uploadScoreToFirebase("Anonymous");
     }
     localStorage.removeItem("finalScore");
+    // Back Button Function
+    const backButton = document.getElementById("backButton");
+    if (backButton) {
+        backButton.addEventListener("click", function () {
+            window.location.href = "dashboard.html";
+        });
+    }
+    // Prevent back button from returning to quiz
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+      history.go(1);
+     };
+
 });
+
 
     </script>
 </head>
 <body>
     <h2>Quiz Completed</h2>
     <p>Thank you for participating.</p>
+    <button id="backButton" class="back">BACK</button>
+
 </body>
 </html>
